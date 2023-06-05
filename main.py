@@ -103,3 +103,31 @@ async def score_titulo(titulo: str = None):
     
     
 
+#Funcion 4. Devolver el titulo, el promedio de votos y la cantidad de votos.
+@app.get('/votes_titulo')
+async def votes_titulo(titulo: str = None):
+    """
+    Dado un titulo devolvemos el promedio de votos y la cantidad de votos
+    siempre y cuando cuente con mas de 2000 votos.
+
+    parametros
+    ----------
+    titulo: titulo de la pelicula
+    """
+    #hacemos un try except para chequear si el titulo existe.
+    try:
+        #creamos una mascara.
+        mask = df[df.title.str.lower() == titulo.lower()]
+        #recuperamos la cantidad de votos y el promedio
+        cantidad_votos = mask['vote_count'].values[0]
+        promedio_votos = mask['vote_average'].values[0]
+        anio = mask['release_year'].values[0]
+        #si no cumple con 2000 votos o mas
+        if cantidad_votos < 2000:
+            #la funcion termina
+            return f"esta pelicula tiene {cantidad_votos} de votos. Por lo que no pasa la condicion de esta funcion"
+        #sino
+        else:
+            return (f"La pelicula {titulo.title()}, fue estrenada en el anio {anio}, tiene una cantidad de votos de {cantidad_votos} y un promedio de {promedio_votos}")
+    except:
+        return "Ingresa el nombre de la pelicula. ej: Toy Story"
