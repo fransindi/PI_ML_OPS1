@@ -95,10 +95,11 @@ async def score_titulo(titulo: str = None):
         mask = df[df['title'].str.lower()  == titulo]
         #extraemos valores y damos respuesta.
         anio = mask['release_year'].values[0]
-        score = mask['vote_average'].values[0]
-        return (f'La pelicula {titulo.title()}, se lanzo en el año {anio}, y tiene una puntuacion de {score}.')
+        score = mask['popularity'].values[0]
+        return (f'La pelicula {titulo.title()}, se lanzo en el año {anio}, y tiene una popularidad de {score}.')
     except:
         #si no pasa se pide otra pelicula
         return 'Ingresa por favor el nombre de la pelicula. ej: Toy Story'
     
     
+
