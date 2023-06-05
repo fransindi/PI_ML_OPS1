@@ -9,9 +9,14 @@ app = FastAPI()
 data = pd.read_csv('data/peliculas_ETL.csv')
 df = data.copy()
 
-# para la funcion 1, debo aplicar esta modificacion.
+# para la funcion 1 y 2, debo aplicar esta modificacion.
 #  comentare cada una con respecto a la funcion que corresponden
 df['release_date'] = pd.to_datetime(df['release_date'])
+
+
+#funcion3:
+#aplicamos un trim para eliminar espacios
+df['title'] = df['title'].str.strip()
 
 
 #Damos la bienvenida en nuestro root
@@ -69,4 +74,31 @@ async def cantidad_filmaciones_dia(dia: str = None):
     #lista con cantidades de pelicula por dia.
     valores_semana = list(df.release_date.dt.weekday.value_counts().sort_index())
     return (f"En el dia {dia.title()}, se han estrenado {valores_semana[indice_semana]} peliculas!")
+    
+
+#Funcion 3. Devolver un titulo con el anio de estreno y el score
+@app.get('/score_titulo')
+async def score_titulo(titulo: str = None):
+    """
+    Devuelve titulo, anio de estreno y score de una 
+    pelicula de nuestra base de datos.
+
+    parametros
+    ----------
+    titulo: titulo de la pelicula completo.
+    """
+    #input a minusculas para evitar errores
+    titulo = titulo.lower()
+    #hacemos un try except, si pasa se completa la funcion
+    try:
+        #creamos una mascara para la pelicula
+        mask = df[df['title'].str.lower()  == titulo]
+        #extraemos valores y damos respuesta.
+        anio = mask['release_year'].values[0]
+        score = mask['vote_average'].values[0]
+        return (f'La pelicula {titulo.title()}, se lanzo en el año {anio}, y tiene una puntuacion de {score}.')
+    except:
+        #si no pasa se pide otra pelicula
+        return 'Ingresa por favor el nombre de la pelicula. ej: Toy Story'
+    
     
