@@ -4,12 +4,13 @@
 ![imagen de muchas peliculas](/src/img/imagen_peliculas.jpg)
 
 ### About:
-Nuestro proyecto sera crear un modelo funcional de recomendaciones de peliculas usando machine learning.
+El proyecto sera crear un modelo funcional de recomendaciones de peliculas usando machine learning.
 
 Contamos con un dataset de unas 23 columnas con mas de 45000 filas las cuales tendremos que analizar y limpiar para poder desarrollar una aplicacion que valga la pena.
 
 
 En este primer proyecto integrador de henry se nos plantean varios desafios que tenemos que resolver.
+
 
 **tales como:**\
 - Hacer un proceso de ETL a nuestro dataset de peliculas
